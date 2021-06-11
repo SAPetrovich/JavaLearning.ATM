@@ -11,22 +11,16 @@ import java.util.Set;
 @Table(name = "clients")
 @NoArgsConstructor
 @Data
-@Accessors(chain = true)
-
 public class Client {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    //@Basic (fetch = FetchType.LAZY).
     private String firstName;
     private String lastName;
     private String holderName;
 
-    @OneToMany(mappedBy = "clientId"/*, fetch = FetchType.EAGER*/)
+    @OneToMany(mappedBy = "clientId")
     private Set<Account> accounts;
-
-//    @OneToMany(mappedBy = "client_id")
-//    private Set<Card> cards;
 }

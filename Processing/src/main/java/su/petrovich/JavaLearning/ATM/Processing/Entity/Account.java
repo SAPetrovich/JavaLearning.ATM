@@ -6,13 +6,12 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
 @NoArgsConstructor
 @Data
-@Accessors(chain = true)
-
 public class Account {
 
     @Id
@@ -27,12 +26,7 @@ public class Account {
     @JoinColumn(name = "clientId", nullable = false)
     private Client clientId;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "client_id", nullable = false)
-//    private Client clientId;
-
-
-//    @OneToMany(mappedBy = "account_id")
-//    private Set<Card> accounts;
+    @OneToMany(mappedBy = "account_id")
+    private Set<Card> accounts;
 
 }
