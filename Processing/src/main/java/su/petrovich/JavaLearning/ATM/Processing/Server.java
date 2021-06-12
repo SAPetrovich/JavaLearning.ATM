@@ -3,6 +3,7 @@ package su.petrovich.JavaLearning.ATM.Processing;
 import su.petrovich.JavaLearning.ATM.Processing.Entity.Account;
 import su.petrovich.JavaLearning.ATM.Processing.Entity.Client;
 import su.petrovich.JavaLearning.ATM.Processing.repository.AccountRepository;
+import su.petrovich.JavaLearning.ATM.Processing.repository.CardRepository;
 import su.petrovich.JavaLearning.ATM.Processing.repository.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -36,7 +37,16 @@ public class Server {
         };
     }
 
-//    @Bean
+    @Bean
+    public CommandLineRunner logClients(ClientRepository repository) {
+        return (args) -> {
+            log.info("┌───────── ClientRepository");
+            repository.findAll().forEach(entity -> log.info("│ {}", entity.toString()));
+            log.info("└──────────────────────────────────────────");
+        };
+    }
+
+    @Bean
     public CommandLineRunner logAccounts(AccountRepository repository) {
         return (args) -> {
             log.info("┌───────── AccountRepository");
@@ -46,17 +56,10 @@ public class Server {
     }
 
     @Bean
-    public CommandLineRunner logClients(ClientRepository repository) {
+    public CommandLineRunner logCards(CardRepository repository) {
         return (args) -> {
-            log.info("┌───────── ClientRepository");
-            //repository.findAll().forEach(entity -> log.info("│ {}", entity.toString()));
-            repository.findAll().forEach(client -> {
-                log.info("│ {}", client.getFirstName());
-//                Set<Account> accountSet = client.getAccounts();
-//                accountSet.forEach(account -> {
-//                    log.info("│   {}", account.getBalance());
-//                });
-            });
+            log.info("┌───────── CardRepository");
+            repository.findAll().forEach(entity -> log.info("│ {}", entity.toString()));
             log.info("└──────────────────────────────────────────");
         };
     }
