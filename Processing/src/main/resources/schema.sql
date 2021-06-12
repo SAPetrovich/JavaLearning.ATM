@@ -25,5 +25,6 @@ create table cards
   , expiration_month int
   , pin_code varchar
   , security_code varchar
+  , client_id bigint not null references clients(id) on delete cascade on update cascade
   , account_id bigint not null references accounts(id) on delete cascade on update cascade
   );

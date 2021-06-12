@@ -3,8 +3,6 @@ package su.petrovich.JavaLearning.ATM.Processing.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.Accessors;
-
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Set;

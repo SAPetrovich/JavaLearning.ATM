@@ -3,8 +3,6 @@ package su.petrovich.JavaLearning.ATM.Processing.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.Accessors;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -25,4 +23,8 @@ public class Client {
     @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private Set<Account> accounts;
+
+    @OneToMany(mappedBy = "client")
+    @ToString.Exclude
+    private Set<Card> cards;
 }

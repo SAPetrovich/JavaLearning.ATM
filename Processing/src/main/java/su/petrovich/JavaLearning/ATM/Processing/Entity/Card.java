@@ -2,11 +2,9 @@ package su.petrovich.JavaLearning.ATM.Processing.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @Entity
 @Table(name = "cards")
@@ -26,5 +24,23 @@ public class Card {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Account account;
+
+    public Boolean isExpired() {
+        Calendar calendar = new GregorianCalendar();
+
+        int delta = expirationYear - calendar.get(Calendar.YEAR);
+        if (delta == 0)
+            delta = expirationMonth - 1 - calendar.get(Calendar.MONTH);
+
+        return delta <= 0;
+    }
+
+    public Boolean isValidPin(String pinCode) {
+        return pinCode.contentEquals(this.pinCode);
+    }
 }

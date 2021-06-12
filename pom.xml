@@ -12,6 +12,7 @@
 
     <modules>
         <module>Processing</module>
+        <module>ProcessingAPI</module>
     </modules>
 
     <properties>
