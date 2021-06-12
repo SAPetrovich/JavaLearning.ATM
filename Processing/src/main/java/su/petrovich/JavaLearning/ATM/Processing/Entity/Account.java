@@ -2,6 +2,7 @@ package su.petrovich.JavaLearning.ATM.Processing.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -23,10 +24,11 @@ public class Account {
     private BigInteger balance;
 
     @ManyToOne
-    @JoinColumn(name = "clientId", nullable = false)
-    private Client clientId;
+    @JoinColumn(nullable = false)
+    private Client client;
 
-    @OneToMany(mappedBy = "account_id")
-    private Set<Card> accounts;
+    @OneToMany(mappedBy = "account")
+    @ToString.Exclude
+    private Set<Card> cards;
 
 }

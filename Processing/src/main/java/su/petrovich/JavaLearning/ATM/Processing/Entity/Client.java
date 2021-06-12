@@ -2,6 +2,7 @@ package su.petrovich.JavaLearning.ATM.Processing.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Client {
     private String lastName;
     private String holderName;
 
-    @OneToMany(mappedBy = "clientId")
+    @OneToMany(mappedBy = "client")
+    @ToString.Exclude
     private Set<Account> accounts;
 }
