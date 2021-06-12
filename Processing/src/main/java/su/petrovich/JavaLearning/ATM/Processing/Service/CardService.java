@@ -8,7 +8,7 @@ import su.petrovich.JavaLearning.ATM.Processing.Entity.Card;
 import su.petrovich.JavaLearning.ATM.Processing.Entity.Client;
 import su.petrovich.JavaLearning.ATM.Processing.Repository.AccountRepository;
 import su.petrovich.JavaLearning.ATM.Processing.Repository.CardRepository;
-import su.petrovich.JavaLearning.ATM.Processing.exception.CardNotFoundException;
+import su.petrovich.JavaLearning.ATM.Processing.exception.CardValidateErrorException;
 import su.petrovich.JavaLearning.ATM.ProcessingAPI.BalanceDTO;
 import su.petrovich.JavaLearning.ATM.ProcessingAPI.ClientDTO;
 import java.math.BigDecimal;
@@ -24,25 +24,27 @@ public class CardService {
     private final AccountRepository accountRepository;
 
     /**
+     * Проверяет валидность карты {@code cardNumber} по сроку и пинкоду {@code pinCode} и возвращает информацию о клиенте-держателе карты
+     */
+    public ClientDTO getClient(String cardNumber, String pinCode) {
+        Card card = cardRepository.findByNumber(cardNumber)
+                .filter( card1 -> !card1.isExpired() && card1.isValidPin(pinCode) )
+                .orElseThrow(CardValidateErrorException::new);
+        return mapToClientDTO(card.getClient());
+    }
+//
+//    public Boolean isValid(String cardNumber, String pinCode){
+//        return cardRepository.findByNumber(cardNumber)
+//                .filter( card1 -> !card1.isExpired() && card1.isValidPin(pinCode) )
+//                .isPresent();
+//    }
+
+    /**
      * Возвращает баланс счета, связанного с картой {@code cardNumber}
      */
     public BalanceDTO getBalance(String cardNumber) {
-        Account account = cardRepository.findByNumber(cardNumber).orElseThrow(CardNotFoundException::new).getAccount();
+        Account account = cardRepository.findByNumber(cardNumber).orElseThrow(CardValidateErrorException::new).getAccount();
         return mapToBalanceDTO(account);
-    }
-
-    /**
-     * Возвращает информацию о клиенте-держателе карты {@code cardNumber}
-     */
-    public ClientDTO getClientInfo(String cardNumber) {
-        Card card = cardRepository.findByNumber(cardNumber).orElseThrow(CardNotFoundException::new);
-        return mapToClientDTO(card.getClient());
-    }
-
-    public Boolean isValid(String cardNumber, String pinCode){
-        return cardRepository.findByNumber(cardNumber)
-                .filter( card1 -> !card1.isExpired() && card1.isValidPin(pinCode) )
-                .isPresent();
     }
 
     private BalanceDTO mapToBalanceDTO(Account account){
