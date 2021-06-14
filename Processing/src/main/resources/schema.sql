@@ -4,26 +4,26 @@ drop table if exists clients CASCADE;
 
 create table clients
     (id bigint auto_increment primary key
-    ,first_name varchar
+    ,first_name varchar not null
     ,last_name varchar
     ,holder_name varchar
     );
 
 create table accounts
     (id bigint auto_increment primary key
-    ,number varchar(20)
-    ,currency_code varchar(3)
-    ,balance decimal(38,0)
+    ,number varchar(20) not null
+    ,currency_code varchar(3) not null
+    ,balance decimal(38,0) not null default 0
     ,client_id bigint not null references clients(id) on delete cascade on update cascade
     );
 
 create table cards
   ( id bigint auto_increment primary key
-  , number varchar
-  , holder_name varchar
-  , expiration_year int
-  , expiration_month int
-  , pin_code varchar
+  , number varchar not null
+  , holder_name varchar not null
+  , expiration_year int not null
+  , expiration_month int not null
+  , pin_code varchar not null
   , security_code varchar
   , client_id bigint not null references clients(id) on delete cascade on update cascade
   , account_id bigint not null references accounts(id) on delete cascade on update cascade
