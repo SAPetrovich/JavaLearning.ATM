@@ -1,4 +1,4 @@
-package su.petrovich.JavaLearning.ATM.Processing.exception;
+package su.petrovich.JavaLearning.ATM.Processing.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
