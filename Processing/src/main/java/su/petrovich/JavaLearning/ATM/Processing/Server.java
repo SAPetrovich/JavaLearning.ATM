@@ -1,8 +1,7 @@
 package su.petrovich.JavaLearning.ATM.Processing;
 
-import su.petrovich.JavaLearning.ATM.Processing.Repository.AccountRepository;
-import su.petrovich.JavaLearning.ATM.Processing.Repository.CardRepository;
-import su.petrovich.JavaLearning.ATM.Processing.Repository.ClientRepository;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.repository.CrudRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,29 +16,16 @@ public class Server {
     }
 
     @Bean
-    public CommandLineRunner logClients(ClientRepository repository) {
+    // Вывод содержимого репозиториев в отладочный протокол
+    public static CommandLineRunner logBeans(ApplicationContext appContext) {
         return (args) -> {
-            log.info("┌───────── ClientRepository");
-            repository.findAll().forEach(entity -> log.info("│ {}", entity.toString()));
-            log.info("└──────────────────────────────────────────");
+            if (!log.isDebugEnabled()) return;
+            appContext.getBeansOfType(CrudRepository.class).forEach( (repositoryName, repository) -> {
+                log.debug("┌──────────── {}", repositoryName);
+                repository.findAll().forEach(entity -> log.debug("│ {}", entity.toString()));
+                log.debug("└──────────────────────────────────────────");
+            });
         };
     }
 
-    @Bean
-    public CommandLineRunner logAccounts(AccountRepository repository) {
-        return (args) -> {
-            log.info("┌───────── AccountRepository");
-            repository.findAll().forEach(entity -> log.info("│ {}", entity.toString()));
-            log.info("└──────────────────────────────────────────");
-        };
-    }
-
-    @Bean
-    public CommandLineRunner logCards(CardRepository repository) {
-        return (args) -> {
-            log.info("┌───────── CardRepository");
-            repository.findAll().forEach(entity -> log.info("│ {}", entity.toString()));
-            log.info("└──────────────────────────────────────────");
-        };
-    }
 }
