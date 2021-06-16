@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 @Entity
 @Table(name = "cards")
