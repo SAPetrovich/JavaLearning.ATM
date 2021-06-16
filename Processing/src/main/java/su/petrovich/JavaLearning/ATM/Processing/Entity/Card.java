@@ -3,6 +3,8 @@ package su.petrovich.JavaLearning.ATM.Processing.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -15,11 +17,19 @@ public class Card {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private String number; // 16..18 цифр
+    @Column(name = "number", unique = true, nullable = false)
+    private String number; // Обычно 16..18 цифр
+
+    @Column(name = "holderName", length = 50, unique = true, nullable = false)
     private String holderName; // латинские буквы и пробел
-    private Integer expirationYear; // Год окончания срока действия карты
-    private Integer expirationMonth; // Месяц окончания срока действия карты
-    private String pinCode; // 4..6 цифр
+
+    @Column(name = "expirationDate", nullable = false)
+    private LocalDate expirationDate; // месяц окончания срока действия карты (день игнорируется, и подразумевается последний)
+
+    @Column(name = "pinCode", nullable = false)
+    private String pinCode; // Обычно 4..6 цифр
+
+    @Column(name = "securityCode", nullable = false)
     private String securityCode; // CVC2/CVV2 код 3 цифры
 
     @ManyToOne
@@ -30,14 +40,8 @@ public class Card {
     @JoinColumn(nullable = false)
     private Account account;
 
-    public Boolean isExpired() {
-        Calendar calendar = new GregorianCalendar();
-
-        int delta = expirationYear - calendar.get(Calendar.YEAR);
-        if (delta == 0)
-            delta = expirationMonth - 1 - calendar.get(Calendar.MONTH);
-
-        return delta <= 0;
+    public Boolean isNotExpired() {
+        return !expirationDate.with(TemporalAdjusters.lastDayOfMonth()).isBefore(LocalDate.now());
     }
 
     public Boolean isValidPin(String pinCode) {

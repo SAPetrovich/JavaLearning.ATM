@@ -6,7 +6,7 @@ create table clients
     (id bigint auto_increment primary key
     ,first_name varchar not null
     ,last_name varchar
-    ,holder_name varchar
+    ,holder_name varchar(50)
     );
 
 create table accounts
@@ -20,11 +20,10 @@ create table accounts
 create table cards
   ( id bigint auto_increment primary key
   , number varchar not null
-  , holder_name varchar not null
-  , expiration_year int not null
-  , expiration_month int not null
+  , holder_name varchar(50) not null
+  , expiration_date date not null
   , pin_code varchar not null
-  , security_code varchar
+  , security_code varchar not null
   , client_id bigint not null references clients(id) on delete cascade on update cascade
   , account_id bigint not null references accounts(id) on delete cascade on update cascade
   );

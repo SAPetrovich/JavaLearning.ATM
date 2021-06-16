@@ -28,7 +28,7 @@ public class CardService {
      */
     public ClientDTO getClient(String cardNumber, String pinCode) {
         Card card = cardRepository.findByNumber(cardNumber)
-                .filter( card1 -> !card1.isExpired() && card1.isValidPin(pinCode) )
+                .filter( card1 -> card1.isNotExpired() && card1.isValidPin(pinCode) )
                 .orElseThrow(CardValidateErrorException::new);
         return mapToClientDTO(card.getClient());
     }

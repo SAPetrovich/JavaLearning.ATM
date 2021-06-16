@@ -17,15 +17,20 @@ public class Account {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "number", length = 20, unique = true, nullable = false)
     private String number;
-    private String currencyCode;
+
+    @Column(name = "balance", nullable = false)
     private BigInteger balance;
 
+    @Column(name = "currencyCode", length = 3, nullable = false)
+    private String currencyCode;
+
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Card> cards;
 

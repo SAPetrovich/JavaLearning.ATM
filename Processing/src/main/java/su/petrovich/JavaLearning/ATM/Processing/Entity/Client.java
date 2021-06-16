@@ -13,18 +13,23 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "firstName", nullable = false)
     private String firstName;
+
+    @Column(name = "lastName")
     private String lastName;
+
+    @Column(name = "holderName", length = 50)
     private String holderName;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Account> accounts;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Card> cards;
 }

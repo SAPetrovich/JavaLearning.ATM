@@ -12,10 +12,10 @@ insert into accounts (id, number, currency_code, balance, client_id) values
 ,(4, '0000000000000000040' ,'RUB' , 4000, 3) -- счет Александра Сидорова
 ;
 
-insert into cards (id, number, holder_name, expiration_year, expiration_month, pin_code, security_code, client_id, account_id) values
-  (1, '1234123412340001' ,'IVAN IVAONOV'      , year(current_date)-1, 1, '0001', '100', 1, 1) -- истек срок действия
- ,(2, '1234123412340002' ,'IVAN IVAONOV'      , year(current_date)+1, 2, '0002', '200', 1, 1) -- активная к своему счету Ивана Иванова
- ,(3, '1234123412340003' ,'IVAN IVAONOV'      , year(current_date)+1, 3, '0003', '300', 1, 3) -- активная к чужому счету Петра Петрова
- ,(4, '1234123412340004' ,'PITER PETROV'      , year(current_date)+1, 4, '0004', '400', 3, 3) -- активная к своему счету Петра Петрова
- ,(5, '1234123412340005' ,'ALEKSANDR SIDOROV' , year(current_date)+1, 5, '0005', '500', 4, 4) -- активная к своему счету Александра Сидорова
+insert into cards (id, number, holder_name, expiration_date, pin_code, security_code, client_id, account_id) values
+  (1, '1234123412340001' ,'IVAN IVAONOV'      , '20210101', '0001', '100', 1, 1) -- истек срок действия
+ ,(2, '1234123412340002' ,'IVAN IVAONOV'      , '20990101', '0002', '200', 1, 1) -- активная к своему счету Ивана Иванова
+ ,(3, '1234123412340003' ,'IVAN IVAONOV'      , '20990101', '0003', '300', 1, 3) -- активная к чужому счету Петра Петрова
+ ,(4, '1234123412340004' ,'PITER PETROV'      , '20990101', '0004', '400', 3, 3) -- активная к своему счету Петра Петрова
+ ,(5, '1234123412340005' ,'ALEKSANDR SIDOROV' , '20990101', '0005', '500', 4, 4) -- активная к своему счету Александра Сидорова
 ;
